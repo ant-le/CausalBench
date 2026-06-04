@@ -1,71 +1,52 @@
-# Causal Meta-Learning Benchmarks
+# Out-of-Distribution Generalization in Deep Learning-Based Bayesian Causal Discovery
 
-A scalable, Hydra-configured framework for benchmarking Bayesian Causal Discovery and Meta-Learning algorithms.
+This repository contains the code and experiments for the Master's thesis **"Out-of-Distribution Generalization in Deep Learning-Based Bayesian Causal Discovery"**.
 
-## Features
+The framework provides a scalable, Hydra-configured environment for benchmarking Bayesian Causal Discovery and Meta-Learning algorithms under distributional shift. It evaluates amortized inference methods (AviCi, BCNP) against explicit Bayesian methods (DiBS, BayesDAG) to test their robustness and the utility of posterior uncertainty.
 
-- **Meta-Learning Focus:** Infinite streaming datasets (`MetaIterableDataset`) with rank-aware seeding for massive parallel training.
-- **Evaluation:** Strict O.O.D. generalization tests with disjoint graph hashing and cached inference artifacts.
-- **Scalability:** Distributed Data Parallel (DDP) support, preemption-safe checkpointing, and cluster-ready per-model Slurm scripts.
-- **Metrics:** Comprehensive graph metrics (SHD, SID, F1, AUROC) and likelihood proxies.
+## Benchmark Components
 
-## Quick Start
+The evaluation is built around a synthetic Structural Causal Model (SCM) generator that isolates specific distributional shifts between the training simulator and test environments:
 
-### Installation (uv)
+- **Evaluated Models:** Amortized inference (AviCi, BCNP) and explicit dataset-specific inference (DiBS, BayesDAG).
+- **Distributional Shifts:** The benchmark evaluates out-of-distribution (OOD) generalization across isolated changes in graph topology, mechanism priors (linear, MLP), exogenous noise, problem scale (node count), and sample sizes.
+- **Metrics & Diagnostics:** Comprehensive graph metrics (SHD, SID, F1, AUROC) are used alongside likelihood proxies and marginal posterior uncertainty diagnostics to evaluate structural error and robustness.
+
+## Reproduction
+
+The experiments are managed using `uv` for reproducible environment resolution and Hydra for configuration.
+
+### 1. Environment Setup
 
 ```bash
+# Install the main environment (AviCi, BCNP, DiBS)
 uv sync --extra cluster --extra wandb --frozen --no-editable
 
-# If DiBS should use NVIDIA GPUs on CUDA 12 clusters:
-uv pip install --python .venv/bin/python --upgrade "jax[cuda12-local]"
-```
-
-Use `--no-editable` for robust cross-platform imports of `causal_meta`.
-
-For full multimodel runs including BayesDAG, use:
-
-```bash
+# Bootstrap the secondary environment (BayesDAG legacy stack)
 scripts/bootstrap_uv.sh
 ```
 
-Cluster scripts auto-detect BayesDAG Python from `.bootstrap_env.sh` or
-`.venv-bayesdag/bin/python`.
+### 2. Local Verification (Smoke Tests)
 
-### Running a Smoke Test
+Run a small, benchmark-shaped smoke config locally to verify the pipeline:
 
 ```bash
-# Run the benchmark-shaped smoke config locally
 uv run causal-meta --config-name dg_2pretrain_smoke model=avici
 ```
 
-Smoke configs use online Weights & Biases logging. Ensure `wandb login` has been
-run in your environment.
+### 3. Cluster Execution (Slurm)
 
-### Running on a Cluster (Slurm)
-
-```bash
-sbatch scripts/run_bcnp.sh
-```
-
-Run the main benchmark sweep with:
+Full experiments and ablations are designed to run on a Slurm cluster. Submission scripts are provided in `scripts/`:
 
 ```bash
+# Run the main benchmark sweep across all models
 scripts/submit_all_models.sh main
-```
 
-Run the smoke sweep with the same benchmark layout:
-
-```bash
-scripts/submit_all_models.sh smoke
-```
-
-Run the ablation suite (AviCi + BCNP across all ablation data configs):
-
-```bash
+# Run the ablation suite
 scripts/submit_ablation_suite.sh
 ```
 
 ## Documentation
 
-- [Runbook](docs/RUNBOOK.md): Detailed guide on running experiments and sweeps.
-- [Design](docs/DESIGN.md): Architectural overview.
+- [Runbook](docs/RUNBOOK.md): Detailed guide on environment setup, running experiments, sweeps, and reproducing analysis figures.
+- [Design](docs/DESIGN.md): Architectural overview of the datasets, models, and evaluation pipeline.

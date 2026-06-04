@@ -33,7 +33,7 @@ Wraps diverse BCD algorithms into a uniform API.
   - `sample_graph_posterior(n_samples)`: Returns a list of adjacency matrices.
   - `sample_scm_posterior(n_samples)`: Returns a list of SCM instances (graph + mechanisms).
 - **Implementations:**
-  - `bncp/`: Bayesian Neural Causal Models (Meta-learning).
+  - `bcnp/`: Bayesian Neural Causal Models (Meta-learning).
   - `dibs/`: Differentiable Bayesian Structure Learning.
   - `avici/`: Amortized Variational Inference.
   - `bayesdag/`: Explicit VI/MCMC baseline.
@@ -185,12 +185,3 @@ Orchestrates the train/eval run (and optional cached inference) based on Hydra c
   - `compute_shd(true_adj, pred_adj_list) -> float`
   - `compute_auroc(true_adj, marginal_probs) -> float`
   - `compute_nil(test_data, posterior_scms) -> float`
-
----
-
-# Organisation
-
-The code is organised into two separate parts:
-
-- `./client`: Organises a static website published on GH-pages. This website should explain the thesis and automatically link results of the thesis and some insights in the future.
-- `./src`: Here lives the source code of the thesis.
