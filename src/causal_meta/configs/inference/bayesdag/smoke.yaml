@@ -1,0 +1,59 @@
+# @package inference.bayesdag
+
+defaults:
+  - paper_faithful
+  - _self_
+
+batch_size: 512
+max_epochs: 5
+external_timeout_s: 600
+
+profile_overrides:
+  linear:
+    num_chains: 2
+  linear_er40:
+    num_chains: 2
+  linear_er60:
+    num_chains: 2
+  linear_sf2:
+    num_chains: 2
+  linear_sf3:
+    num_chains: 2
+  linear_sbm:
+    num_chains: 2
+  linear_ws:
+    num_chains: 2
+  linear_grg:
+    num_chains: 2
+  neuralnet:
+    num_chains: 2
+  neuralnet_er40:
+    num_chains: 2
+  neuralnet_er60:
+    num_chains: 2
+  neuralnet_sf2:
+    num_chains: 2
+  neuralnet_sf3:
+    num_chains: 2
+  neuralnet_sbm:
+    num_chains: 2
+  neuralnet_ws:
+    num_chains: 2
+  neuralnet_grg:
+    num_chains: 2
+  gpcde:
+    num_chains: 2
+  gpcde_er40:
+    num_chains: 2
+  gpcde_er60:
+    num_chains: 2
+  gpcde_sf2:
+    num_chains: 2
+  gpcde_sf3:
+    num_chains: 2
+  gpcde_sbm:
+    num_chains: 2
+  gpcde_ws:
+    num_chains: 2
+  gpcde_grg:
+    num_chains: 2

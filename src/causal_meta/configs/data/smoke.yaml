@@ -1,0 +1,162 @@
+# @package data
+
+# Basic evaluation profile:
+# - training samples mixed node sizes
+# - validation/test fixed anchors (small/medium/big) + extrapolation probe
+# - observational-only training (no interventional training yet)
+
+n_nodes: 60
+
+train_n_nodes: [10, 20, 30, 40]
+
+train_family:
+  name: bcnp_all_data_train_smoke
+  graph_cfg:
+    type: mixture
+    weights: [0.1667, 0.1667, 0.1667, 0.1667, 0.1667, 0.1665]
+    generators:
+      - type: er
+        sparsity: 0.0526
+      - type: er
+        sparsity: 0.1053
+      - type: er
+        sparsity: 0.1579
+      - type: sf
+        m: 1
+      - type: sf
+        m: 2
+      - type: sf
+        m: 3
+  mech_cfg:
+    type: mixture
+    weights: [0.3333, 0.3333, 0.3334]
+    factories:
+      - type: linear
+        weight_scale: 10.0
+        noise_concentration: 2.0
+        noise_rate: 2.0
+      - type: mlp
+        hidden_dim: 32
+      - type: gp
+        mode: approximate
+        rff_dim: 512
+        num_kernels: 4
+        length_scale_range: [0.1, 10.0]
+        variance_range: [0.1, 10.0]
+
+val_families:
+  id_val_small_linear_er:
+    name: id_val_small_linear_er
+    n_nodes: 10
+    graph_cfg:
+      type: er
+      sparsity: 0.2222
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  id_val_medium_linear_er:
+    name: id_val_medium_linear_er
+    n_nodes: 30
+    graph_cfg:
+      type: er
+      sparsity: 0.0690
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  id_val_big_linear_er:
+    name: id_val_big_linear_er
+    n_nodes: 50
+    graph_cfg:
+      type: er
+      sparsity: 0.0408
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  ood_val_extrap_linear_er:
+    name: ood_val_extrap_linear_er
+    n_nodes: 60
+    graph_cfg:
+      type: er
+      sparsity: 0.0339
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+test_families:
+  id_test_small_linear_er:
+    name: id_test_small_linear_er
+    n_nodes: 10
+    graph_cfg:
+      type: er
+      sparsity: 0.2222
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  id_test_medium_linear_er:
+    name: id_test_medium_linear_er
+    n_nodes: 30
+    graph_cfg:
+      type: er
+      sparsity: 0.0690
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  id_test_big_linear_er:
+    name: id_test_big_linear_er
+    n_nodes: 50
+    graph_cfg:
+      type: er
+      sparsity: 0.0408
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  ood_test_extrap_linear_er:
+    name: ood_test_extrap_linear_er
+    n_nodes: 60
+    graph_cfg:
+      type: er
+      sparsity: 0.0339
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+seeds_val: [1000]
+seeds_test: [2000]
+base_seed: 42
+samples_per_task: 1000
+safety_checks: true
+
+num_workers: 0
+pin_memory: false
+normalize_data: true
+
+batch_size_train: 8
+batch_size_val: 1
+batch_size_test: 1
+batch_size_test_interventional: 1
+
+use_interventional_training: false
+samples_per_task_int: 0
+train_p_obs_only: 1.0

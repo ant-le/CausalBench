@@ -1,0 +1,44 @@
+# @package trainer
+
+lr: 0.0001
+weight_decay: 1e-4
+target_global_tasks_per_step: 32
+
+# Shared long-run amortized-model defaults.
+# Model-specific overrides can refine the optimizer and scheduler while the
+# step budget and global batch remain hardware-invariant.
+max_optimizer_steps: 500000
+log_every_n_steps: 100
+val_check_interval_steps: 5000
+checkpoint_every_n_steps: 50000
+
+amp: true
+amp_dtype: bf16
+grad_clip_norm: 1.0
+
+scheduler: cosine
+scheduler_t_max_steps: ${trainer.max_optimizer_steps}
+scheduler_eta_min: 0.0
+# Shorter warmup improves stability for long BCNP runs.
+scheduler_warmup_ratio: 0.02
+scheduler_warmup_start_factor: 0.001
+scheduler_milestones_steps: []
+scheduler_gamma: 0.1
+
+# Explicitly disabled by default; AVICI re-enables this in trainer/avici.yaml.
+regulariser_update_interval_steps: 0
+
+# Validation controls.
+validation_n_samples: 16
+validation_metrics: [e-edgef1, ne-sid, ne-shd, valid_dag_pct]
+validation_log_per_family: false
+validation_selection_metric: mean_ood_ne-sid
+validation_selection_mode: min
+validation_group_prefixes:
+  id: [id_]
+  ood_graph: [ood_graph_]
+  ood_mech: [ood_mech_]
+  ood_noise: [ood_noise_]
+  ood_both: [ood_both_]
+  ood_nodes: [ood_nodes_]
+  ood_samples: [ood_samples_]

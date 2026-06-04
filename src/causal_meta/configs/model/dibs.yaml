@@ -1,0 +1,7 @@
+# @package model
+
+type: "dibs"
+id: "dibs"
+
+# Canonical DiBS scientific/runtime settings live under
+# configs/inference/dibs/*.yaml.

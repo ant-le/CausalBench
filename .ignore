@@ -1,0 +1,17 @@
+# We don't push OpenCode Configs
+!AGENTS.md
+!.opencode/
+!opencode.json
+
+# Be able do read paper
+!paper/
+
+# Venvs
+!.venv*
+
+# Be able to investigate experiments
+!experiments/thesis_runs/avici
+!experiments/thesis_runs/bcnp
+!experiments/thesis_runs/bayesdag
+!experiments/thesis_runs/dibs
+

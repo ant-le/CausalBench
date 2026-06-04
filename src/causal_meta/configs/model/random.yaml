@@ -1,0 +1,7 @@
+# @package model
+
+type: "random"
+id: "random"
+
+# p_edge is inferred automatically from data.train_family when omitted.
+randomize_topological_order: true

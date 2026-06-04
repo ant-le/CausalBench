@@ -1,0 +1,7 @@
+# @package model
+
+type: "bayesdag"
+id: "bayesdag"
+
+# Canonical BayesDAG scientific/runtime settings live under
+# configs/inference/bayesdag/*.yaml.

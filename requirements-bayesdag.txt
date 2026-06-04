@@ -1,0 +1,17 @@
+--extra-index-url https://download.pytorch.org/whl/cu117
+torch==1.13.1+cu117
+functorch==1.13.1
+setuptools<81
+numpy==1.24.4
+scipy==1.10.1
+pandas==1.5.3
+networkx==2.8.8
+scikit-learn==1.1.3
+tensorboard==2.9.0
+protobuf==3.20.3
+typing_extensions>=4.0,<5
+tqdm==4.64.1
+gitpython==3.1.27
+graphical-models==0.1a19
+pgmpy==0.1.21
+pyro-ppl==1.8.1

@@ -1,0 +1,566 @@
+{
+  "_meta": {
+    "description": "Paper reference data for plausibility comparison (Appendix F).",
+    "generated_by": "manual extraction from source papers",
+    "note": "All values are [mean, std_of_mean] unless otherwise noted."
+  },
+
+  "cross_model_comparison": {
+    "source": "Amatya et al. (2025), Bayesian Causal Discovery with Neural Processes (BCNP paper)",
+    "source_tables": "Tables 7--15",
+    "note": "All four models evaluated on d=20 ER graphs with n=1000 observations. Our thesis uses n=500. BCNP values are from the 'All Data' variant (trained on all ER densities), closest to our unified training setup.",
+    "paper_n": 1000,
+    "thesis_n": 500,
+    "metrics": {
+      "auc": { "description": "AUROC", "direction": "higher_is_better" },
+      "e_shd": {
+        "description": "Expected SHD",
+        "direction": "lower_is_better"
+      },
+      "e_edgef1": {
+        "description": "Expected Edge F1",
+        "direction": "higher_is_better"
+      }
+    },
+    "thesis_metric_keys": {
+      "auc": "auc_mean",
+      "e_shd": "e-shd_mean",
+      "e_edgef1": "e-edgef1_mean"
+    },
+    "families": {
+      "id_linear_er20_d20_n500": {
+        "label": "Linear ER20",
+        "table": "Table 7",
+        "models": {
+          "avici": {
+            "auc": [0.89, 0.01],
+            "e_shd": [26.61, 0.59],
+            "e_edgef1": [0.31, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.89, 0.01],
+            "e_shd": [23.35, 0.75],
+            "e_edgef1": [0.44, 0.02]
+          },
+          "dibs": {
+            "auc": [0.73, 0.01],
+            "e_shd": [25.41, 0.74],
+            "e_edgef1": [0.16, 0.01]
+          },
+          "bayesdag": {
+            "auc": [0.52, 0.01],
+            "e_shd": [23.02, 0.54],
+            "e_edgef1": [0.03, 0.01]
+          }
+        }
+      },
+      "id_linear_er40_d20_n500": {
+        "label": "Linear ER40",
+        "table": "Table 8",
+        "models": {
+          "avici": {
+            "auc": [0.86, 0.01],
+            "e_shd": [56.22, 0.48],
+            "e_edgef1": [0.28, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.9, 0.01],
+            "e_shd": [49.01, 1.05],
+            "e_edgef1": [0.4, 0.01]
+          },
+          "dibs": {
+            "auc": [0.53, 0.02],
+            "e_shd": [72.43, 2.08],
+            "e_edgef1": [0.11, 0.01]
+          },
+          "bayesdag": {
+            "auc": [0.51, 0.01],
+            "e_shd": [44.07, 0.53],
+            "e_edgef1": [0.03, 0.01]
+          }
+        }
+      },
+      "id_linear_er60_d20_n500": {
+        "label": "Linear ER60",
+        "table": "Table 9",
+        "models": {
+          "avici": {
+            "auc": [0.83, 0.01],
+            "e_shd": [80.9, 0.71],
+            "e_edgef1": [0.31, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.86, 0.01],
+            "e_shd": [72.15, 1.17],
+            "e_edgef1": [0.36, 0.01]
+          },
+          "dibs": {
+            "auc": [0.4, 0.01],
+            "e_shd": [106.64, 1.25],
+            "e_edgef1": [0.11, 0.0]
+          },
+          "bayesdag": {
+            "auc": [0.51, 0.01],
+            "e_shd": [63.51, 0.4],
+            "e_edgef1": [0.04, 0.01]
+          }
+        }
+      },
+      "id_neuralnet_er20_d20_n500": {
+        "label": "NeuralNet ER20",
+        "table": "Table 10",
+        "models": {
+          "avici": {
+            "auc": [0.84, 0.01],
+            "e_shd": [29.51, 0.37],
+            "e_edgef1": [0.24, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.88, 0.01],
+            "e_shd": [30.05, 0.65],
+            "e_edgef1": [0.36, 0.01]
+          },
+          "dibs": {
+            "auc": [0.69, 0.01],
+            "e_shd": [28.48, 0.2],
+            "e_edgef1": [0.12, 0.01]
+          },
+          "bayesdag": {
+            "auc": [0.59, 0.02],
+            "e_shd": [90.21, 0.2],
+            "e_edgef1": [0.09, 0.0]
+          }
+        }
+      },
+      "id_neuralnet_er40_d20_n500": {
+        "label": "NeuralNet ER40",
+        "table": "Table 11",
+        "models": {
+          "avici": {
+            "auc": [0.79, 0.01],
+            "e_shd": [61.11, 0.46],
+            "e_edgef1": [0.24, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.84, 0.01],
+            "e_shd": [53.44, 0.71],
+            "e_edgef1": [0.37, 0.01]
+          },
+          "dibs": {
+            "auc": [0.67, 0.01],
+            "e_shd": [46.81, 0.21],
+            "e_edgef1": [0.13, 0.01]
+          },
+          "bayesdag": {
+            "auc": [0.59, 0.01],
+            "e_shd": [97.25, 0.14],
+            "e_edgef1": [0.15, 0.0]
+          }
+        }
+      },
+      "id_neuralnet_er60_d20_n500": {
+        "label": "NeuralNet ER60",
+        "table": "Table 12",
+        "models": {
+          "avici": {
+            "auc": [0.79, 0.01],
+            "e_shd": [85.15, 0.59],
+            "e_edgef1": [0.29, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.83, 0.01],
+            "e_shd": [68.34, 0.91],
+            "e_edgef1": [0.39, 0.01]
+          },
+          "dibs": {
+            "auc": [0.64, 0.01],
+            "e_shd": [65.72, 0.17],
+            "e_edgef1": [0.13, 0.01]
+          },
+          "bayesdag": {
+            "auc": [0.58, 0.01],
+            "e_shd": [103.95, 0.09],
+            "e_edgef1": [0.19, 0.01]
+          }
+        }
+      },
+      "id_gpcde_er20_d20_n500": {
+        "label": "GPCDE ER20",
+        "table": "Table 13",
+        "models": {
+          "avici": {
+            "auc": [0.74, 0.01],
+            "e_shd": [36.27, 0.2],
+            "e_edgef1": [0.08, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.83, 0.01],
+            "e_shd": [38.24, 0.85],
+            "e_edgef1": [0.2, 0.01]
+          },
+          "dibs": {
+            "auc": [0.8, 0.01],
+            "e_shd": [26.33, 0.17],
+            "e_edgef1": [0.18, 0.01]
+          },
+          "bayesdag": {
+            "auc": [0.67, 0.02],
+            "e_shd": [99.69, 0.22],
+            "e_edgef1": [0.11, 0.0]
+          }
+        }
+      },
+      "id_gpcde_er40_d20_n500": {
+        "label": "GPCDE ER40",
+        "table": "Table 14",
+        "models": {
+          "avici": {
+            "auc": [0.72, 0.01],
+            "e_shd": [67.68, 0.33],
+            "e_edgef1": [0.15, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.78, 0.01],
+            "e_shd": [62.05, 1.17],
+            "e_edgef1": [0.22, 0.01]
+          },
+          "dibs": {
+            "auc": [0.74, 0.01],
+            "e_shd": [45.04, 0.26],
+            "e_edgef1": [0.16, 0.0]
+          },
+          "bayesdag": {
+            "auc": [0.67, 0.02],
+            "e_shd": [103.09, 0.33],
+            "e_edgef1": [0.19, 0.01]
+          }
+        }
+      },
+      "id_gpcde_er60_d20_n500": {
+        "label": "GPCDE ER60",
+        "table": "Table 15",
+        "models": {
+          "avici": {
+            "auc": [0.71, 0.01],
+            "e_shd": [91.33, 0.36],
+            "e_edgef1": [0.21, 0.01]
+          },
+          "bcnp": {
+            "auc": [0.77, 0.01],
+            "e_shd": [80.28, 0.77],
+            "e_edgef1": [0.25, 0.01]
+          },
+          "dibs": {
+            "auc": [0.67, 0.01],
+            "e_shd": [64.22, 0.22],
+            "e_edgef1": [0.13, 0.0]
+          },
+          "bayesdag": {
+            "auc": [0.66, 0.01],
+            "e_shd": [107.46, 0.31],
+            "e_edgef1": [0.24, 0.0]
+          }
+        }
+      }
+    }
+  },
+
+  "source_papers": {
+    "avici": {
+      "citation": "Lorch et al. (2022), Amortized Inference for Causal Structure Learning",
+      "paper_hyperparams": {
+        "layers": 8,
+        "dim": 128,
+        "num_heads": 4,
+        "key_size": 32,
+        "widening_factor": 4,
+        "dropout": 0.1,
+        "training_steps": 300000,
+        "training_d_range": "2--50",
+        "training_n": 200,
+        "training_graph_types": ["ER (in-degree 2)", "SF"],
+        "training_mechanisms": ["linear", "polynomial", "GP", "RFF"],
+        "inference_type": "point_estimate",
+        "parameters": "4.2M"
+      },
+      "our_config_key_map": {
+        "layers": "layers",
+        "dim": "dim",
+        "num_heads": "num_heads",
+        "key_size": "key_size",
+        "widening_factor": "widening_factor",
+        "dropout": "dropout"
+      },
+      "our_config_overrides": {
+        "training_steps": "500k (16M tasks / batch 32)",
+        "training_d_range": "10--40",
+        "training_n": 500,
+        "training_graph_types": "ER (20/40/60) + SF (m=1,2,3)",
+        "training_mechanisms": "Linear, MLP, GP-CDE",
+        "inference_type": "100 posterior samples",
+        "parameters": "~4.2M"
+      },
+      "known_config_differences": [
+        "num_heads: paper=4, ours=8",
+        "training_steps: paper=300k, ours=500k (16M tasks / 32 batch)",
+        "training_n: paper=200 observations per task, ours=500",
+        "training_d_range: paper=2-50, ours=10-40",
+        "inference: paper=point estimate (single DAG), ours=100 posterior samples"
+      ],
+      "comparable_results": {
+        "note": "AVICI paper reports only d=30 n=1000 results. No d=20 tables exist. The d=30 results use ER graphs with in-degree 2 (~60 expected edges). Our closest d=30 families use ER20 (20 edges), which is a much sparser graph. Direct numerical comparison is NOT meaningful; included for reference only.",
+        "source_table": "Table 1 (observational, d=30, n=1000, ER, in-degree~2)",
+        "settings": {
+          "d": 30,
+          "n": 1000,
+          "graph": "ER",
+          "expected_edges": "~60"
+        },
+        "results": {
+          "LINEAR": { "sid": [145.6, 21.5], "f1": [0.672, 0.04] },
+          "RFF": { "sid": [255.1, 48.2], "f1": [0.618, 0.06] }
+        },
+        "cross_domain_table": "Table 5 (d=30, observational)",
+        "cross_domain_results": {
+          "LINEAR_tested_on_LINEAR": {
+            "shd": [18.9, 2.1],
+            "f1": [0.672, 0.04],
+            "auroc": [0.978, 0.0],
+            "auprc": [0.79, 0.03]
+          },
+          "RFF_tested_on_RFF": {
+            "shd": [21.6, 3.5],
+            "f1": [0.618, 0.06],
+            "auroc": [0.854, 0.03],
+            "auprc": [0.659, 0.06]
+          }
+        }
+      }
+    },
+
+    "bcnp": {
+      "citation": "Amatya et al. (2025), Bayesian Causal Discovery with Neural Processes",
+      "paper_hyperparams": {
+        "d_model": 512,
+        "dim_feedforward": 1024,
+        "nhead": 8,
+        "num_layers_encoder": 4,
+        "num_layers_decoder": 4,
+        "dropout": 0.1,
+        "n_perm_samples": 100,
+        "sinkhorn_iter": 1000,
+        "training_n": 1000,
+        "training_d": 20,
+        "training_graph_types": ["ER (20/40/60 expected edges)"],
+        "training_mechanisms": ["Linear", "NeuralNet", "GPCDE"],
+        "variant": "All Data (trained on all ER densities)"
+      },
+      "our_config_key_map": {
+        "d_model": "d_model",
+        "dim_feedforward": "dim_feedforward",
+        "nhead": "nhead",
+        "num_layers_encoder": "num_layers",
+        "num_layers_decoder": "num_layers_decoder",
+        "dropout": "dropout",
+        "n_perm_samples": "n_perm_samples",
+        "sinkhorn_iter": "sinkhorn_iter"
+      },
+      "our_config_overrides": {
+        "training_n": 500,
+        "training_d": "10--40 mixed",
+        "training_graph_types": "ER (20/40/60) + SF (m=1,2,3)",
+        "training_mechanisms": "Linear, MLP, GP-CDE",
+        "variant": "All Data (ER + SF mixed)"
+      },
+      "known_config_differences": [
+        "training_n: paper=1000, ours=500",
+        "training_d: paper=20 fixed, ours=10-40 mixed",
+        "training_graphs: paper=ER only, ours=ER+SF mixed",
+        "training variant: paper='All Data' = all ER densities; ours = mixed ER+SF densities"
+      ],
+      "comparable_results": {
+        "note": "BCNP paper Tables 7-15 provide the main cross-model comparison (see cross_model_comparison section). Additional SynTReN result below for reference only (we do not test on SynTReN).",
+        "syntren_table": "Table 2 (SynTReN, d=20, n=500, 10 datasets)",
+        "syntren_settings": {
+          "d": 20,
+          "n": 500,
+          "dataset": "SynTReN (semi-synthetic)"
+        },
+        "syntren_results": {
+          "bcnp": {
+            "auc": [0.84, 0.02],
+            "e_shd": [50.87, 1.92],
+            "e_edgef1": [0.17, 0.01],
+            "log_prob": [-76.35, 3.61]
+          },
+          "avici": {
+            "auc": [0.66, 0.03],
+            "e_shd": [48.94, 2.37],
+            "e_edgef1": [0.09, 0.01],
+            "log_prob": [-90.82, 4.82]
+          },
+          "dibs": {
+            "auc": [0.81, 0.02],
+            "e_shd": [59.83, 1.22],
+            "e_edgef1": [0.15, 0.01],
+            "log_prob": [-83.31, 1.68]
+          },
+          "bayesdag": {
+            "auc": [0.52, 0.04],
+            "e_shd": [99.09, 0.9],
+            "e_edgef1": [0.1, 0.01],
+            "log_prob": [-195.53, 16.78]
+          }
+        }
+      }
+    },
+
+    "dibs": {
+      "citation": "Lorch et al. (2021), Dibs: Differentiable Bayesian Structure Learning",
+      "paper_hyperparams": {
+        "steps": 3000,
+        "n_particles": 30,
+        "latent_dim": "k=d (equal to number of nodes)",
+        "mode_default": "nonlinear",
+        "alpha_nonlinear_d20": 0.02,
+        "gamma_z_nonlinear_d20": 5,
+        "gamma_theta_nonlinear_d20": 1000,
+        "alpha_linear_d20": 0.2,
+        "gamma_z_linear_d20": 5,
+        "gamma_theta_linear_d20": 500,
+        "n_particles_linear": 30,
+        "training_n": 100,
+        "training_d": 20,
+        "training_graph_types": [
+          "ER (2d expected edges)",
+          "SF (2d expected edges)"
+        ],
+        "training_mechanisms": ["linear Gaussian", "nonlinear Gaussian"]
+      },
+      "our_config_key_map": {
+        "steps": "steps",
+        "n_particles": "n_particles",
+        "mode_default": "mode",
+        "alpha_nonlinear_d20": "alpha",
+        "gamma_z_nonlinear_d20": "gamma_z",
+        "gamma_theta_nonlinear_d20": "gamma_theta"
+      },
+      "our_config_overrides": {
+        "latent_dim": "k=d (same)",
+        "alpha_linear_d20": 0.05,
+        "gamma_z_linear_d20": 5.0,
+        "gamma_theta_linear_d20": 500,
+        "n_particles_linear": 64,
+        "training_n": 500,
+        "training_d": 20,
+        "training_graph_types": "per-dataset (ER + SF)",
+        "training_mechanisms": "per-dataset"
+      },
+      "known_config_differences": [
+        "n_particles: paper=30, ours=32 (nonlinear) / 64 (linear)",
+        "alpha (nonlinear): paper=0.02, ours=0.05",
+        "gamma_theta (nonlinear): paper=1000, ours=500",
+        "training_n: paper=100, ours=500 (DiBS fits per-dataset, so this is the test dataset size)",
+        "n_particles (linear): paper=30, ours=64"
+      ],
+      "comparable_results": {
+        "note": "DiBS paper's d=20 synthetic results are presented only as box-plot figures (Figs 2-4), not in extractable tables. The only tabulated results are for Sachs protein data (d=11). DiBS d=20 ER results from the BCNP paper are used in the cross-model comparison instead. Below is the Sachs result for reference only.",
+        "sachs_table": "Table 1 (Sachs protein, d=11, N=7466, joint posterior nonlinear Gaussian)",
+        "sachs_settings": {
+          "d": 11,
+          "n": 7466,
+          "dataset": "Sachs protein signaling"
+        },
+        "sachs_results": {
+          "dibs": { "e_shd": [22.6, 0.5], "auroc": [0.577, 0.039] },
+          "dibs_plus": { "e_shd": [22.8, 1.9], "auroc": [0.535, 0.041] }
+        },
+        "dibs_paper_d20_settings": {
+          "note": "For reference: DiBS paper's d=20 experiments used ER/SF with 2d=40 expected edges and N=100 observations. Results are in Figures 2-4 (box plots, not extractable). Our closest families would be id_*_er40_d20_n500, but n differs (100 vs 500).",
+          "d": 20,
+          "n": 100,
+          "expected_edges": 40,
+          "closest_thesis_families": [
+            "id_linear_er40_d20_n500",
+            "id_neuralnet_er40_d20_n500"
+          ]
+        }
+      }
+    },
+
+    "bayesdag": {
+      "citation": "Annadani et al. (2024), BayesDAG: Gradient-Based Posterior Inference for Causal Discovery",
+      "paper_hyperparams": {
+        "variant": "nonlinear",
+        "num_chains": 10,
+        "sinkhorn_n_iter": 300,
+        "max_epochs": 400,
+        "lambda_sparse_d20_er": 300,
+        "scale_noise_p_d20_er": 0.01,
+        "scale_noise_theta_d20_er": 0.01,
+        "sparse_init": false,
+        "norm_layers": true,
+        "res_connection": true,
+        "training_d_range": "5--100",
+        "training_n_d5": 500,
+        "training_n_d30_plus": 5000,
+        "training_graph_types": ["ER (degree 2)", "SF (degree 2)"],
+        "training_mechanisms": ["nonlinear (d>=20)", "linear (d=5)"]
+      },
+      "our_config_key_map": {
+        "variant": "variant",
+        "num_chains": "num_chains",
+        "sinkhorn_n_iter": "sinkhorn_n_iter",
+        "max_epochs": "max_epochs",
+        "lambda_sparse_d20_er": "lambda_sparse",
+        "norm_layers": "norm_layers",
+        "res_connection": "res_connection",
+        "sparse_init": "sparse_init"
+      },
+      "our_config_overrides": {
+        "scale_noise_p_d20_er": 0.1,
+        "scale_noise_theta_d20_er": 0.01,
+        "training_d_range": 20,
+        "training_n_d5": 500,
+        "training_n_d30_plus": 500,
+        "training_graph_types": "per-dataset (ER + SF)",
+        "training_mechanisms": "nonlinear (per-dataset)"
+      },
+      "known_config_differences": [
+        "training_n: paper uses N=5000 for d>=30, N=500 for d=5; ours=500 for all",
+        "BayesDAG fits per-dataset (not pre-trained), so training_n = test dataset size",
+        "lambda_sparse and scale params are tuned per-setting in paper (Table 3); ours uses fixed defaults"
+      ],
+      "comparable_results": {
+        "note": "BayesDAG paper's d=20 results exist only in appendix figures (Fig 6), not in extractable tables. Main paper tables cover d=70/100 (Table 1) and SynTReN/Sachs (Table 2). BayesDAG d=20 ER results from the BCNP paper are used in the cross-model comparison instead. Below are supplementary reference values only.",
+        "high_dim_table": "Table 1 (ER nonlinear, N=5000, 95% CI)",
+        "high_dim_settings": {
+          "graph": "ER",
+          "mechanism": "nonlinear",
+          "n": 5000
+        },
+        "high_dim_results": {
+          "d70": {
+            "bayesdag": { "e_shd": [143.7, 11.61] },
+            "bcd": { "e_shd": [217.05, 9.58] }
+          },
+          "d100": {
+            "bayesdag": { "e_shd": [295.92, 24.67] },
+            "bcd": { "e_shd": [362.66, 29.18] }
+          }
+        },
+        "syntren_sachs_table": "Table 2 (SynTReN d=20, Sachs d=11, 95% CI)",
+        "syntren_sachs_results": {
+          "syntren": {
+            "bayesdag": { "e_shd": [34.21, 2.82], "e_edgef1": [0.2, 0.02] },
+            "dibs": { "e_shd": [46.43, 4.12], "e_edgef1": [0.16, 0.02] }
+          },
+          "sachs": {
+            "bayesdag": { "e_shd": [18.92, 1.0], "e_edgef1": [0.26, 0.04] },
+            "dibs": { "e_shd": [22.3, 0.31], "e_edgef1": [0.2, 0.01] }
+          }
+        }
+      }
+    }
+  }
+}

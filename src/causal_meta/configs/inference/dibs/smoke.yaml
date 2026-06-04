@@ -1,0 +1,22 @@
+# @package inference.dibs
+
+defaults:
+  - paper_faithful
+  - _self_
+
+steps: 50
+external_timeout_s: 600
+
+profile_overrides:
+  linear_d20:
+    n_particles: 8
+  linear_d50:
+    n_particles: 8
+  neuralnet_d20:
+    n_particles: 8
+  neuralnet_d50:
+    n_particles: 8
+  gpcde_d20:
+    n_particles: 8
+  gpcde_d50:
+    n_particles: 8

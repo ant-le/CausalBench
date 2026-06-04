@@ -1,0 +1,15 @@
+# @package inference
+
+defaults:
+  - dibs: paper_faithful
+  - bayesdag: paper_faithful
+  - _self_
+
+n_samples: 100
+auc_num_shuffles: 1000
+auc_balance_classes: true
+auc_seed: 0
+
+cache_compress: true
+cache_dtype: "uint8"
+cache_n_samples: ${.n_samples}

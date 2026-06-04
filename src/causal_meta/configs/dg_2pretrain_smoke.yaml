@@ -1,0 +1,38 @@
+# @package _global_
+
+defaults:
+  - dg_2pretrain_multimodel
+  - override /inference/dibs: smoke
+  - override /inference/bayesdag: smoke
+  - _self_
+
+name: "dg_2pretrain_smoke"
+
+# Fast validation config that preserves the dg_2pretrain benchmark layout.
+data:
+  seeds_val: [1000]
+  seeds_test: [2000]
+  inference_n_samples: 8
+
+trainer:
+  max_optimizer_steps: 2000
+  log_every_n_steps: 100
+  val_check_interval_steps: 500
+  checkpoint_every_n_steps: 1000
+
+inference:
+  n_samples: ${data.inference_n_samples}
+  cache_compress: false
+  cache_n_samples: null
+
+hydra:
+  run:
+    dir: ${oc.env:CAUSAL_META_RUN_DIR,experiments/runs/${name}}
+  sweep:
+    dir: ${oc.env:CAUSAL_META_SWEEP_DIR,experiments/runs/${name}}
+    subdir: "${model.id}"
+  output_subdir: null
+  sweeper:
+    max_batch_size: 1
+    params:
+      model: avici,bcnp,dibs,bayesdag

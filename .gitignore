@@ -47,7 +47,7 @@ pnpm-debug.log*
 
 # --- Hydra / experiment outputs ---
 # Keep YAML inputs under `experiments/`, but ignore generated run artifacts.
-experiments/runs/
+experiments/
 
 # --- Real-world dataset cache ---
 src/causal_meta/datasets/real_world/_cache/

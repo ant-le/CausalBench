@@ -1,0 +1,46 @@
+# @package _global_
+
+defaults:
+  - dg_2pretrain_multimodel
+  - _self_
+
+name: "dg_2pretrain_ablation_graph_id"
+
+data:
+  train_family:
+    name: source_mixed_all_d10_40_n500_with_ood
+    graph_cfg:
+      type: mixture
+      weights:
+        [0.1111, 0.1111, 0.1111, 0.1111, 0.1111, 0.1111, 0.1111, 0.1111, 0.1112]
+      generators:
+        - type: er
+          sparsity: 0.0526
+        - type: er
+          sparsity: 0.1053
+        - type: er
+          sparsity: 0.1579
+        - type: sf
+          m: 1
+        - type: sf
+          m: 2
+        - type: sf
+          m: 3
+        - type: sbm
+          n_blocks: 4
+          p_intra: 0.6
+          p_inter: 0.01
+        - type: ws
+          k: 4
+          p: 0.3
+        - type: grg
+          radius: 0.3
+          dim: 2
+
+hydra:
+  run:
+    dir: ${oc.env:CAUSAL_META_RUN_DIR,experiments/runs/${name}}
+  sweep:
+    dir: ${oc.env:CAUSAL_META_SWEEP_DIR,experiments/runs/${name}}
+    subdir: "${model.id}"
+  output_subdir: null

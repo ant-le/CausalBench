@@ -1,0 +1,75 @@
+# @package inference.dibs
+
+# Canonical DiBS settings for explicit comparisons.
+#
+# Provenance:
+# - runtime defaults follow the local wrapper contract
+# - profile hyperparameters come from the DiBS paper appendix table / text
+#   where available, with nearest paper-backed fallback by node-count bucket
+#   (d20 or d50) for benchmark families not covered exactly by the paper.
+
+mode: "nonlinear"
+steps: 3000
+seed: 0
+use_marginal: false
+xla_preallocate: false
+external_process: true
+external_python: ${oc.env:CAUSAL_META_DIBS_PYTHON,null}
+external_timeout_s: 3600
+
+# Default base profile = nonlinear Gaussian, d=20.
+alpha: 0.02
+gamma_z: 5.0
+gamma_theta: 1000.0
+n_particles: 30
+
+profile_overrides:
+  # Linear Gaussian, marginal posterior with BGe score.
+  linear_d20:
+    mode: "linear"
+    use_marginal: true
+    alpha: 2.0
+    gamma_z: 2.0
+    gamma_theta: null
+    n_particles: 30
+
+  linear_d50:
+    mode: "linear"
+    use_marginal: true
+    alpha: 0.2
+    gamma_z: 5.0
+    gamma_theta: null
+    n_particles: 30
+
+  # Nonlinear / joint posterior settings from the DiBS appendix.
+  neuralnet_d20:
+    mode: "nonlinear"
+    use_marginal: false
+    alpha: 0.02
+    gamma_z: 5.0
+    gamma_theta: 1000.0
+    n_particles: 30
+
+  gpcde_d20:
+    mode: "nonlinear"
+    use_marginal: false
+    alpha: 0.02
+    gamma_z: 5.0
+    gamma_theta: 1000.0
+    n_particles: 30
+
+  neuralnet_d50:
+    mode: "nonlinear"
+    use_marginal: false
+    alpha: 0.01
+    gamma_z: 15.0
+    gamma_theta: 2000.0
+    n_particles: 10
+
+  gpcde_d50:
+    mode: "nonlinear"
+    use_marginal: false
+    alpha: 0.01
+    gamma_z: 15.0
+    gamma_theta: 2000.0
+    n_particles: 10

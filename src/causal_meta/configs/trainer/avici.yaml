@@ -1,0 +1,19 @@
+# @package trainer
+
+# AVICI benchmark profile within the shared amortized-training schema.
+#
+# Preserve the AVICI paper's optimizer ratios where possible:
+# - LR drop x0.1 after roughly 2/3 of training
+# - global grad clip norm 1
+# - dual update every 500 primal steps
+
+# Fix the global task batch at 32 and absorb the AVICI paper's sqrt-batch
+# scaling into a constant AdamW learning rate.
+lr: 1.0e-4
+
+scheduler: cosine
+scheduler_warmup_ratio: 0.02
+
+regulariser_update_interval_steps: 100
+validation_selection_metric: mean_id_e-edgef1
+validation_selection_mode: max

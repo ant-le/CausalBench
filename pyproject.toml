@@ -1,0 +1,69 @@
+[project]
+name = "causal_meta"
+version = "0.3.0"
+description = "Bayesian Causal Discovery Benchmarking Framework"
+authors = [{name = "Anton Lechuga", email = "anton.luis.lechuga@proton.me"}]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.0.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "networkx>=3.0",
+    "scipy>=1.10.0",
+    "matplotlib>=3.7.0",
+    "hydra-core>=1.3.0",
+]
+
+[project.scripts]
+causal-meta = "causal_meta.main:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+]
+cluster = [
+    "dibs-lib",
+    "jax[cuda12-local]>=0.4.30; platform_system == 'Linux' and platform_machine == 'x86_64'",
+]
+wandb = [
+    "wandb>=0.15.0",
+]
+
+[tool.hatch.build]
+exclude = [
+    "**/__pycache__",
+    "**/*.pyc",
+    "**/*.bak",
+    ".*cache",
+    ".venv*",
+    "build",
+    "dist",
+    "experiments/runs",
+    "paper",
+]
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "README.md",
+    "pyproject.toml",
+    "requirements-bayesdag.txt",
+    "scripts",
+    "src",
+    "tests",
+    "uv.lock",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/causal_meta"]
+include = [
+    "src/causal_meta/configs/**/*.yaml",
+    "src/causal_meta/analysis/paper_comparison/paper_reference.json",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

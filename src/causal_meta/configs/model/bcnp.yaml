@@ -1,0 +1,27 @@
+# @package model
+
+type: "bcnp"
+id: "bcnp"
+trainer_profile: "bcnp"
+
+# RQ1-sized transformer (section 4.2 scale).
+d_model: 512
+dim_feedforward: 1024
+nhead: 8
+num_layers: 4
+dropout: 0.1
+emb_depth: 2
+use_positional_encoding: false
+
+# Decoder depth (split internally into Q/L halves).
+num_layers_decoder: 4
+
+# Sinkhorn permutation sampling.
+n_perm_samples: 100
+# Match the BCNP training setup reported in the meta-learning paper.
+sinkhorn_iter: 1000
+q_before_l: true
+
+# Optional internal BCNP tensor diagnostics.
+debug_logging: false
+debug_log_every_n_steps: 1000

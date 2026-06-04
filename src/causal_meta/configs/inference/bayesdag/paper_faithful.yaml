@@ -1,0 +1,203 @@
+# @package inference.bayesdag
+
+# Canonical BayesDAG settings for explicit comparisons.
+#
+# Provenance:
+# - top-level defaults follow the official Project-BayesDAG base configs for
+#   nonlinear custom-data runs
+# - density-specific profiles use the paper-backed / official config variants
+#   already referenced in the thesis notes and fall back to the nearest
+#   available graph/mechanism profile when the benchmark family is unsupported
+
+variant: "nonlinear"
+lambda_sparse: 300.0
+num_chains: 10
+sinkhorn_n_iter: 300
+scale_noise: 0.01
+scale_noise_p: 0.1
+batch_size: 256
+max_epochs: 400
+
+standardize_data_mean: false
+standardize_data_std: false
+skip_evaluation: true
+
+norm_layers: true
+res_connection: true
+vi_norm: true
+input_perm: false
+sparse_init: false
+
+save_dir: ${hydra:runtime.output_dir}/bayesdag_output
+external_python: ${oc.env:CAUSAL_META_BAYESDAG_PYTHON,null}
+external_timeout_s: 3600
+device: "auto"
+
+profile_overrides:
+  linear:
+    variant: "linear"
+    lambda_sparse: 300.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  linear_er40:
+    variant: "linear"
+    lambda_sparse: 150.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  linear_er60:
+    variant: "linear"
+    lambda_sparse: 75.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  linear_sf2:
+    variant: "linear"
+    lambda_sparse: 150.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  linear_sf3:
+    variant: "linear"
+    lambda_sparse: 75.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  linear_sbm:
+    variant: "linear"
+    lambda_sparse: 150.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  linear_ws:
+    variant: "linear"
+    lambda_sparse: 150.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  linear_grg:
+    variant: "linear"
+    lambda_sparse: 150.0
+    num_chains: 20
+    scale_noise: 0.01
+    scale_noise_p: 1.0
+
+  neuralnet:
+    variant: "nonlinear"
+    lambda_sparse: 75.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  neuralnet_er40:
+    variant: "nonlinear"
+    lambda_sparse: 50.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  neuralnet_er60:
+    variant: "nonlinear"
+    lambda_sparse: 30.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  neuralnet_sf2:
+    variant: "nonlinear"
+    lambda_sparse: 75.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  neuralnet_sf3:
+    variant: "nonlinear"
+    lambda_sparse: 75.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  neuralnet_sbm:
+    variant: "nonlinear"
+    lambda_sparse: 50.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  neuralnet_ws:
+    variant: "nonlinear"
+    lambda_sparse: 50.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  neuralnet_grg:
+    variant: "nonlinear"
+    lambda_sparse: 50.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde:
+    variant: "nonlinear"
+    lambda_sparse: 300.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde_er40:
+    variant: "nonlinear"
+    lambda_sparse: 150.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde_er60:
+    variant: "nonlinear"
+    lambda_sparse: 75.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde_sf2:
+    variant: "nonlinear"
+    lambda_sparse: 150.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde_sf3:
+    variant: "nonlinear"
+    lambda_sparse: 75.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde_sbm:
+    variant: "nonlinear"
+    lambda_sparse: 150.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde_ws:
+    variant: "nonlinear"
+    lambda_sparse: 150.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1
+
+  gpcde_grg:
+    variant: "nonlinear"
+    lambda_sparse: 150.0
+    num_chains: 10
+    scale_noise: 0.01
+    scale_noise_p: 0.1

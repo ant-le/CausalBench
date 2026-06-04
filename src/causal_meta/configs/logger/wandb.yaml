@@ -1,0 +1,20 @@
+# @package logger
+
+wandb:
+  enabled: true
+  mode: "online"
+  project: "causal_meta"
+  entity: null
+  tags: []
+  allowed_metrics:
+    - "loss"
+    - "lr"
+    - "grad_norm"
+    - "tasks_seen"
+    - "global_tasks_per_step"
+    - "optimizer_step"
+    - "e-edgef1"
+    - "ne-sid"
+    - "ne-shd"
+    - "graph_nll_per_edge"
+    - "valid_dag_pct"

@@ -1,0 +1,177 @@
+# @package data
+#
+# Shared training distribution, validation families, and a representative
+# smoke-test subset of test families.  Do not select this file directly —
+# use ``smoke`` or ``full`` which inherit from it via defaults.
+#
+# ── Training distribution ──
+# Graphs : equal mixture of ER(20/40/60) + SF(m=1,2,3)  → 6 generators
+# Mechs  : equal mixture of Linear, MLP, GP              → 3 factories
+# This matches the BCNP "All Data" paper setup extended with SF graphs.
+
+n_nodes: 20
+
+train_family:
+  name: bcnp_all_data_train
+
+  graph_cfg:
+    type: mixture
+    weights: [0.1667, 0.1667, 0.1667, 0.1667, 0.1667, 0.1665]
+    generators:
+      # ER at three density levels (20/40/60 expected edges for n=20)
+      - type: er
+        sparsity: 0.0526
+      - type: er
+        sparsity: 0.1053
+      - type: er
+        sparsity: 0.1579
+      # SF at three attachment levels
+      - type: sf
+        m: 1
+      - type: sf
+        m: 2
+      - type: sf
+        m: 3
+
+  mech_cfg:
+    type: mixture
+    weights: [0.3333, 0.3333, 0.3334]
+    factories:
+      - type: linear
+        weight_scale: 10.0
+        noise_concentration: 2.0
+        noise_rate: 2.0
+      - type: mlp
+        hidden_dim: 32
+      - type: gp
+        mode: approximate
+        rff_dim: 512
+        num_kernels: 4
+        length_scale_range: [0.1, 10.0]
+        variance_range: [0.1, 10.0]
+
+# ── Validation families ──
+# One ID family per graph type × one mechanism, plus one OOD probe.
+val_families:
+  id_val_linear_er20:
+    name: id_val_linear_er20
+    graph_cfg:
+      type: er
+      sparsity: 0.0526
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  id_val_neuralnet_er40:
+    name: id_val_neuralnet_er40
+    graph_cfg:
+      type: er
+      sparsity: 0.1053
+    mech_cfg:
+      type: mlp
+      hidden_dim: 32
+
+  id_val_gpcde_er60:
+    name: id_val_gpcde_er60
+    graph_cfg:
+      type: er
+      sparsity: 0.1579
+    mech_cfg:
+      type: gp
+      mode: approximate
+      rff_dim: 512
+      num_kernels: 4
+      length_scale_range: [0.1, 10.0]
+      variance_range: [0.1, 10.0]
+
+  id_val_linear_sf2:
+    name: id_val_linear_sf2
+    graph_cfg:
+      type: sf
+      m: 2
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  ood_val_mechanism_periodic_er40:
+    name: ood_val_mechanism_periodic_er40
+    graph_cfg:
+      type: er
+      sparsity: 0.1053
+    mech_cfg:
+      type: periodic
+      weight_scale: 1.0
+
+# ── Test families (smoke subset) ──
+# Representative selection: 3 ID (one per mech), 1 graph-OOD, 1 mech-OOD.
+test_families:
+  # ID: one per mechanism type with an in-distribution graph
+  id_linear_er20:
+    name: id_linear_er20
+    graph_cfg:
+      type: er
+      sparsity: 0.0526
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  id_neuralnet_er40:
+    name: id_neuralnet_er40
+    graph_cfg:
+      type: er
+      sparsity: 0.1053
+    mech_cfg:
+      type: mlp
+      hidden_dim: 32
+
+  id_gpcde_sf2:
+    name: id_gpcde_sf2
+    graph_cfg:
+      type: sf
+      m: 2
+    mech_cfg:
+      type: gp
+      mode: approximate
+      rff_dim: 512
+      num_kernels: 4
+      length_scale_range: [0.1, 10.0]
+      variance_range: [0.1, 10.0]
+
+  # OOD graph only: novel graph structure, ID mechanism
+  ood_graph_sbm_linear:
+    name: ood_graph_sbm_linear
+    graph_cfg:
+      type: sbm
+      n_blocks: 4
+      p_intra: 0.6
+      p_inter: 0.01
+    mech_cfg:
+      type: linear
+      weight_scale: 10.0
+      noise_concentration: 2.0
+      noise_rate: 2.0
+
+  # OOD mechanism only: ID graph, novel mechanism
+  ood_mech_periodic_er40:
+    name: ood_mech_periodic_er40
+    graph_cfg:
+      type: er
+      sparsity: 0.1053
+    mech_cfg:
+      type: periodic
+      weight_scale: 1.0
+
+# Defaults overridden per-profile.
+samples_per_task: 1000
+base_seed: 42
+safety_checks: true
+normalize_data: true
+batch_size_val: 1
+batch_size_test: 1
+batch_size_test_interventional: 1

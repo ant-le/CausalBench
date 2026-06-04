@@ -1,0 +1,24 @@
+# @package model
+
+type: "avici"
+id: "avici"
+trainer_profile: "avici"
+
+# Reference AVICI backbone defaults from the upstream repository.
+dim: 128
+layers: 8
+key_size: 32
+num_heads: 8
+widening_factor: 4
+dropout: 0.1
+logit_bias_init: -3.0
+cosine_temp_init: 0.0
+mask_diag: true
+
+# Stabilized acyclicity updates for long benchmark runs.
+acyclicity_weight: 1e-4
+acyclicity_pow_iters: 10
+regulariser_lr: 1.0e-4
+regulariser_ema_alpha: 0.05
+regulariser_warmup_updates: 100
+regulariser_max_weight: null
