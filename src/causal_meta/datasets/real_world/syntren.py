@@ -65,7 +65,6 @@ def _load_matrix_file(path: Path) -> np.ndarray:
 def load_syntren(
     *,
     data_dir: str | None = None,
-    **kwargs: object,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
     """Load a SynTReN dataset from a local directory.
 

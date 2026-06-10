@@ -10,7 +10,6 @@ from typing import Any, Mapping
 
 import numpy as np
 import torch
-import logging
 
 log = logging.getLogger(__name__)
 

@@ -4184,7 +4184,6 @@ def generate_error_decomposition_table(
     *,
     output_path: Path,
     model_filter: Sequence[str] | None = None,
-    label_prefix: str = "",
 ) -> pd.DataFrame:
     """Generate a LaTeX table decomposing SHD into FP/FN/reversed per model per shift.
 
@@ -4792,7 +4791,6 @@ def generate_cross_axis_summary_table(
     *,
     output_path: Path,
     model_filter: Sequence[str] | None = None,
-    label_prefix: str = "",
 ) -> pd.DataFrame:
     """Generate a LaTeX table summarising three core metrics per model per shift axis.
 
@@ -4987,7 +4985,6 @@ def generate_structural_summary_table(
     *,
     output_path: Path,
     model_filter: Sequence[str] | None = None,
-    label_prefix: str = "",
 ) -> pd.DataFrame:
     """Generate a LaTeX table for skeleton F1, orientation accuracy, and sparsity.
 

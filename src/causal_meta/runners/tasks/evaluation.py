@@ -11,37 +11,24 @@ import torch.nn as nn
 from omegaconf import DictConfig
 
 from causal_meta.datasets.data_module import CausalMetaModule
-from causal_meta.datasets.generators.configs import (
-    AnyFamilyConfig,
-    FamilyConfig,
-    RealWorldFamilyConfig,
-)
+from causal_meta.datasets.generators.configs import (AnyFamilyConfig,
+                                                     FamilyConfig,
+                                                     RealWorldFamilyConfig)
 from causal_meta.datasets.torch_datasets import MetaFixedDataset
 from causal_meta.datasets.utils.normalization import normalize_scm_data
 from causal_meta.runners.logger.base import BaseLogger
 from causal_meta.runners.metrics.graph import Metrics
 from causal_meta.runners.metrics.scm import SCMMetrics
-from causal_meta.runners.tasks.utils import (
-    infer_device,
-    resolve_inference_root,
-    sampling_mode,
-    shard_indices,
-    unwrap_model,
-)
+from causal_meta.runners.tasks.utils import (infer_device,
+                                             resolve_inference_root,
+                                             sampling_mode, shard_indices,
+                                             unwrap_model)
 from causal_meta.runners.utils.artifacts import (
-    NpEncoder,
-    atomic_torch_save,
-    cache_settings,
-    cache_suffix,
-    get_model_name,
-    prepare_graph_samples_for_cache,
-    resolve_output_dir,
-)
+    NpEncoder, atomic_torch_save, cache_settings, cache_suffix, get_model_name,
+    prepare_graph_samples_for_cache, resolve_output_dir)
 from causal_meta.runners.utils.distributed import DistributedContext
 from causal_meta.runners.utils.explicit_profiles import (
-    apply_explicit_profile,
-    infer_explicit_profile,
-)
+    apply_explicit_profile, infer_explicit_profile)
 
 log = logging.getLogger(__name__)
 
@@ -474,7 +461,7 @@ def run(
 
     # Unwrap if DDP
     model_unwrapped = unwrap_model(model)
-    model_unwrapped_raw = model.module if dist_ctx.is_distributed else model
+    model_unwrapped_raw = model_unwrapped
 
     all_summary_metrics = {}
     all_raw_metrics = {}

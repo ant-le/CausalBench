@@ -161,7 +161,6 @@ def generate_rq2_transfer_figure(
 
     n_cols = len(present_anchors)
     height_ratios = _THREE_ROW_HEIGHT_RATIOS  # DAG, metric, error
-    row_names = ["dag", "metric", "error"]
     n_rows = 3
 
     fig, axes = plt.subplots(

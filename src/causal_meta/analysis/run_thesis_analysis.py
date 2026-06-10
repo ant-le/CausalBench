@@ -13,7 +13,6 @@ from causal_meta.analysis.diagnostics import posterior as diag_posterior
 from causal_meta.analysis.diagnostics.final_runs import \
     generate_uncertainty_alignment_heatmap
 from causal_meta.analysis.generalisation import plots as gen_plots
-from causal_meta.analysis.generalisation import tables as gen_tables
 from causal_meta.analysis.methodology_figures import \
     generate_all_methodology_figures
 from causal_meta.analysis.plots.results import (
@@ -46,7 +45,6 @@ def run_thesis_analysis(
     methodology_dir = thesis_root / thesis_common.GRAPHICS_METHODOLOGY
     generate_all_methodology_figures(methodology_dir)
 
-    summary_df = thesis_common.prepare_summary_dataframe(run_dirs)
     raw_df = thesis_common.prepare_raw_dataframe(run_dirs)
 
     gen_plots.generate_results_anchor_table(raw_df, results_dir / "results_anchor.tex")
@@ -119,7 +117,7 @@ def run_thesis_analysis(
         log.info("Valid DAG shift figure skipped (--skip-posterior).")
     else:
         try:
-            valid_dag_df = gen_plots.generate_valid_dag_shift_figure(
+            gen_plots.generate_valid_dag_shift_figure(
                 raw_df,
                 run_dirs,
                 output_path=results_dir / "valid_dag_shift.pdf",

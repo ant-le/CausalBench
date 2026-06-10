@@ -71,8 +71,6 @@ def _mech_summary(cfg: Mapping[str, Any]) -> str:
 def _write_table(
     output_path: Path,
     *,
-    caption: str,
-    label: str,
     headers: list[str],
     rows: list[list[str]],
     colspec: str,
@@ -101,14 +99,10 @@ def _write_table(
 def _write_family_table(
     output_path: Path,
     *,
-    caption: str,
-    label: str,
     rows: list[list[str]],
 ) -> None:
     _write_table(
         output_path,
-        caption=caption,
-        label=label,
         headers=["Family", "Category", "Graph", "Mechanism", "N_G", "N"],
         rows=rows,
         colspec=(
@@ -247,8 +241,6 @@ def generate_appendix_artifacts(thesis_root: Path, configs_root: Path) -> list[s
     ]
     _write_table(
         dir_b / "model_configurations_table.tex",
-        caption="Model-specific configurations derived from the Hydra model and inference YAML files.",
-        label="tab:appendix_model_configurations",
         headers=["Model", "Configuration summary"],
         rows=model_rows,
         colspec="lp{10cm}",
@@ -269,8 +261,6 @@ def generate_appendix_artifacts(thesis_root: Path, configs_root: Path) -> list[s
         )
     _write_family_table(
         dir_c / "validation_families_table.tex",
-        caption="Validation families used during benchmark training and selection.",
-        label="tab:appendix_validation_families",
         rows=val_rows,
     )
     generated.append(f"{GRAPHICS_APPENDIX_C}/validation_families_table.tex")

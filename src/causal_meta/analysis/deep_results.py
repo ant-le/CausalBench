@@ -21,30 +21,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from causal_meta.analysis.common.plot_style import (
-    COMPACT_SINGLE_FIGSIZE,
-    HAT_E,
-    LABEL_FONTSIZE,
-    LEGEND_FONTSIZE,
-    SINGLE_FIGSIZE,
-    SUBTITLE_FONTSIZE,
-    TITLE_FONTSIZE,
-    TOP_LEGEND_ANCHOR,
-    TOP_LEGEND_RECT,
-)
-from causal_meta.analysis.common.thesis import (
-    axis_category,
-    format_value,
-    is_fixed_size_task_frame,
-    metric_sem,
-)
-from causal_meta.analysis.utils import (
-    MODEL_COLORS,
-    MODEL_MARKERS,
-    PAPER_MODEL_LABELS,
-    EmptyAnalysisDataError,
-    save_figure_data,
-)
+from causal_meta.analysis.common.plot_style import (COMPACT_SINGLE_FIGSIZE,
+                                                    HAT_E, LABEL_FONTSIZE,
+                                                    LEGEND_FONTSIZE,
+                                                    SINGLE_FIGSIZE,
+                                                    SUBTITLE_FONTSIZE,
+                                                    TITLE_FONTSIZE,
+                                                    TOP_LEGEND_ANCHOR,
+                                                    TOP_LEGEND_RECT)
+from causal_meta.analysis.common.thesis import (axis_category,
+                                                is_fixed_size_task_frame,
+                                                metric_sem)
+from causal_meta.analysis.utils import (MODEL_COLORS, MODEL_MARKERS,
+                                        PAPER_MODEL_LABELS,
+                                        EmptyAnalysisDataError,
+                                        save_figure_data)
 
 log = logging.getLogger(__name__)
 

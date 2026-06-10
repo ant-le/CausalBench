@@ -223,6 +223,7 @@ def run(
         )
         else float("inf")
     )
+    best_val_metric_name: str | None = None
     step = 0
     tasks_seen = 0
 
@@ -252,6 +253,37 @@ def run(
             scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
         if "scaler_state_dict" in checkpoint:
             scaler.load_state_dict(checkpoint["scaler_state_dict"])
+
+        saved_best_val_metric = checkpoint.get("best_val_metric")
+        if saved_best_val_metric is not None:
+            saved_selection_metric = checkpoint.get("validation_selection_metric")
+            saved_selection_mode = checkpoint.get("validation_selection_mode")
+            can_restore_best = (
+                saved_selection_metric is None
+                or str(saved_selection_metric) == validation_selection_metric
+            ) and (
+                saved_selection_mode is None
+                or str(saved_selection_mode) == validation_selection_mode
+            )
+            if can_restore_best:
+                best_val_metric = float(saved_best_val_metric)
+                saved_best_name = checkpoint.get("best_val_metric_name")
+                best_val_metric_name = (
+                    str(saved_best_name)
+                    if saved_best_name is not None
+                    else validation_selection_metric
+                )
+                if rank == 0 and math.isfinite(best_val_metric):
+                    log.info(
+                        "Restored best validation metric from checkpoint: %s=%.4f",
+                        best_val_metric_name,
+                        best_val_metric,
+                    )
+            elif rank == 0:
+                log.warning(
+                    "Checkpoint best validation metric was not restored because "
+                    "trainer.validation_selection_metric/mode changed."
+                )
 
         start_step = int(checkpoint["step"])
         step = start_step
@@ -520,6 +552,7 @@ def run(
                     maximize=maximize_metric,
                 ):
                     best_val_metric = current_metric
+                    best_val_metric_name = current_metric_name
                     save_checkpoint(
                         cfg,
                         model_unwrapped,
@@ -534,6 +567,10 @@ def run(
                         world_size=world_size,
                         train_batch_size=train_batch_size,
                         accumulate_grad_batches=accumulate_grad_batches,
+                        best_val_metric=best_val_metric,
+                        best_val_metric_name=best_val_metric_name,
+                        validation_selection_metric=validation_selection_metric,
+                        validation_selection_mode=validation_selection_mode,
                         wandb_run_id=logger.run_id if logger else None,
                     )
                     log.info(
@@ -568,6 +605,10 @@ def run(
                     world_size=world_size,
                     train_batch_size=train_batch_size,
                     accumulate_grad_batches=accumulate_grad_batches,
+                    best_val_metric=best_val_metric,
+                    best_val_metric_name=best_val_metric_name,
+                    validation_selection_metric=validation_selection_metric,
+                    validation_selection_mode=validation_selection_mode,
                     wandb_run_id=logger.run_id if logger else None,
                 )
             next_checkpoint_step = _advance_step_threshold(
@@ -592,6 +633,10 @@ def run(
             world_size=world_size,
             train_batch_size=train_batch_size,
             accumulate_grad_batches=accumulate_grad_batches,
+            best_val_metric=best_val_metric,
+            best_val_metric_name=best_val_metric_name,
+            validation_selection_metric=validation_selection_metric,
+            validation_selection_mode=validation_selection_mode,
             wandb_run_id=logger.run_id if logger else None,
         )
 
@@ -798,6 +843,10 @@ def save_checkpoint(
     world_size: int,
     train_batch_size: int,
     accumulate_grad_batches: int,
+    best_val_metric: float | None = None,
+    best_val_metric_name: str | None = None,
+    validation_selection_metric: str | None = None,
+    validation_selection_mode: str | None = None,
     wandb_run_id: str | None = None,
 ) -> None:
     experiment_seed = get_experiment_seed(
@@ -821,6 +870,14 @@ def save_checkpoint(
     }
     if scheduler is not None:
         state["scheduler_state_dict"] = scheduler.state_dict()
+    if best_val_metric is not None:
+        state["best_val_metric"] = float(best_val_metric)
+    if best_val_metric_name is not None:
+        state["best_val_metric_name"] = str(best_val_metric_name)
+    if validation_selection_metric is not None:
+        state["validation_selection_metric"] = str(validation_selection_metric)
+    if validation_selection_mode is not None:
+        state["validation_selection_mode"] = str(validation_selection_mode)
     if wandb_run_id is not None:
         state["wandb_run_id"] = str(wandb_run_id)
     torch.save(

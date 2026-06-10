@@ -13,10 +13,9 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from causal_meta.datasets.data_module import CausalMetaModule
 from causal_meta.models.base import BaseModel
 from causal_meta.models.factory import ModelFactory
-from causal_meta.models.random.edge_prior import (
-    infer_edge_probability as _infer_edge_probability,
-    maybe_fill_edge_prior,
-)
+from causal_meta.models.random.edge_prior import \
+    infer_edge_probability as _infer_edge_probability
+from causal_meta.models.random.edge_prior import maybe_fill_edge_prior
 from causal_meta.runners.logger.base import BaseLogger
 from causal_meta.runners.logger.local import LocalLogger
 from causal_meta.runners.logger.wandb import WandbLogger
@@ -24,7 +23,8 @@ from causal_meta.runners.tasks import analysis, evaluation, pre_training
 from causal_meta.runners.utils.artifacts import resolve_output_dir
 from causal_meta.runners.utils.distributed import DistributedContext
 from causal_meta.runners.utils.env import log_environment_info
-from causal_meta.runners.utils.seeding import get_experiment_seed, seed_everything
+from causal_meta.runners.utils.seeding import (get_experiment_seed,
+                                               seed_everything)
 
 log = logging.getLogger(__name__)
 
@@ -486,7 +486,17 @@ def run_pipeline(cfg: DictConfig) -> None:
             device = dist_ctx.device
             model.to(device)
 
-            if is_distributed:
+            model_unwrapped_raw = model
+            model_unwrapped = cast(BaseModel, model_unwrapped_raw)
+            if not isinstance(model_unwrapped, BaseModel):
+                raise TypeError("Expected model to be a BaseModel.")
+
+            if is_distributed and model_unwrapped.needs_pretraining:
+                if not any(p.requires_grad for p in model_unwrapped.parameters()):
+                    raise RuntimeError(
+                        "Distributed pre-training requires at least one trainable "
+                        "model parameter."
+                    )
                 use_cuda_ddp = dist_ctx.device.type == "cuda"
                 ddp_find_unused_parameters = model_type == "bcnp"
                 model = DDP(
@@ -495,10 +505,15 @@ def run_pipeline(cfg: DictConfig) -> None:
                     output_device=local_rank if use_cuda_ddp else None,
                     find_unused_parameters=ddp_find_unused_parameters,
                 )
+                model_unwrapped_raw = model.module
+                model_unwrapped = cast(BaseModel, model_unwrapped_raw)
+            elif is_distributed and dist_ctx.is_main_process:
+                log.info(
+                    "Skipping DDP wrapping for explicit model '%s'.",
+                    model_type or type(model_unwrapped).__name__,
+                )
 
             # 5/6. Pre-training (amortized models only)
-            model_unwrapped_raw = model.module if is_distributed else model
-            model_unwrapped = cast(BaseModel, model_unwrapped_raw)
             if not isinstance(model_unwrapped, BaseModel):
                 raise TypeError(
                     "Expected model to be a BaseModel or DDP-wrapped BaseModel."

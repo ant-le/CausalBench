@@ -13,7 +13,6 @@ from omegaconf import OmegaConf
 from causal_meta.analysis.utils import (PAPER_MODEL_LABELS,
                                         EmptyAnalysisDataError,
                                         load_raw_task_dataframe,
-                                        load_runs_dataframe,
                                         map_dataset_description)
 
 EXPECTED_MODEL_DIRS: tuple[str, ...] = tuple(PAPER_MODEL_LABELS.keys())
@@ -321,22 +320,6 @@ def write_results_macros(
         macro_name = "ResultsRunId" + run.model_dir.capitalize()
         lines.append(rf"\providecommand{{\{macro_name}}}{{{escape_tex(run.run_id)}}}")
     output_path.write_text("\n".join(lines) + "\n")
-
-
-def prepare_summary_dataframe(run_dirs: Sequence[Path]) -> pd.DataFrame:
-    summary_df = load_runs_dataframe(run_dirs, translate_names=False)
-    if summary_df.empty:
-        raise EmptyAnalysisDataError("No summary metrics found in curated thesis runs.")
-    summary_df = summary_df.copy()
-    summary_df["Model"] = summary_df["ModelKey"].map(paper_model_label)
-    summary_df["Dataset"] = summary_df["DatasetKey"].map(map_dataset_description)
-    summary_df["Dataset"] = summary_df.apply(
-        lambda row: thesis_dataset_label(str(row["DatasetKey"]), str(row["Dataset"])),
-        axis=1,
-    )
-    summary_df = _filter_to_thesis_benchmark_families(summary_df)
-    summary_df["AxisCategory"] = summary_df["DatasetKey"].map(axis_category)
-    return summary_df
 
 
 def prepare_raw_dataframe(run_dirs: Sequence[Path]) -> pd.DataFrame:

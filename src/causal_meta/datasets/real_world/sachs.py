@@ -140,7 +140,7 @@ def _load_cached_data(cache_path: Path) -> torch.Tensor:
     return torch.tensor(rows, dtype=torch.float32)
 
 
-def load_sachs(**kwargs: object) -> Tuple[torch.Tensor, torch.Tensor]:
+def load_sachs() -> Tuple[torch.Tensor, torch.Tensor]:
     """Load the Sachs (2005) protein signalling dataset.
 
     Returns:
@@ -155,9 +155,9 @@ def load_sachs(**kwargs: object) -> Tuple[torch.Tensor, torch.Tensor]:
 
     adjacency = _sachs_adjacency()
 
-    assert data.shape[1] == _SACHS_N_NODES, (
-        f"Expected {_SACHS_N_NODES} columns, got {data.shape[1]}"
-    )
+    assert (
+        data.shape[1] == _SACHS_N_NODES
+    ), f"Expected {_SACHS_N_NODES} columns, got {data.shape[1]}"
     return data, adjacency
 
 
