@@ -27,9 +27,14 @@ def test_distributed_context_setup_ignores_slurm_only_env(monkeypatch):
     for key in ("RANK", "WORLD_SIZE", "LOCAL_RANK", "MASTER_ADDR", "MASTER_PORT"):
         monkeypatch.delenv(key, raising=False)
 
-    with pytest.raises(ValueError, match="MASTER_ADDR"):
-        _ = DistributedContext.setup()
+    try:
+        with pytest.raises(ValueError, match="MASTER_ADDR"):
+            _ = DistributedContext.setup()
 
-    assert "RANK" in os.environ
-    assert "WORLD_SIZE" in os.environ
-    assert "LOCAL_RANK" in os.environ
+        assert "RANK" in os.environ
+        assert "WORLD_SIZE" in os.environ
+        assert "LOCAL_RANK" in os.environ
+    finally:
+        os.environ.pop("RANK", None)
+        os.environ.pop("WORLD_SIZE", None)
+        os.environ.pop("LOCAL_RANK", None)
