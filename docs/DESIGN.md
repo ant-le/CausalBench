@@ -2,7 +2,7 @@
 
 ## 1. System Overview
 
-The system is a Python-based framework for benchmarking Bayesian Causal Discovery (BCD) methods, specifically focusing on Meta-Learning approaches. It is designed to measure robustness against distribution shifts (o.o.d.) and extend capabilities to full Structural Causal Model (SCM) inference.
+The system is a Python-based framework for benchmarking Bayesian Causal Discovery (BCD) methods, specifically focusing on Meta-Learning approaches. It is designed to measure robustness against distribution shifts (o.o.d.).
 
 The core architecture follows a **Configuration-Driven Pipeline** pattern:
 `Config` -> `Data Generation` -> `Model Training` -> `Inference` -> `Evaluation`
