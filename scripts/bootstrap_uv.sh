@@ -8,7 +8,8 @@ MAIN_PYTHON_VERSION="${CAUSAL_META_MAIN_PYTHON_VERSION:-3.11}"
 BAYESDAG_PYTHON_VERSION="${CAUSAL_META_BAYESDAG_PYTHON_VERSION:-3.9}"
 JAX_EXTRAS="${CAUSAL_META_JAX_EXTRAS:-cuda12-local}"
 BAYESDAG_REPO_URL="${CAUSAL_META_BAYESDAG_REPO_URL:-https://github.com/microsoft/Project-BayesDAG.git}"
-BAYESDAG_REPO_REF="${CAUSAL_META_BAYESDAG_REPO_REF:-}"
+# Pinned upstream commit for reproducibility (override via CAUSAL_META_BAYESDAG_REPO_REF).
+BAYESDAG_REPO_REF="${CAUSAL_META_BAYESDAG_REPO_REF:-5d9974dcf6e2a7229698fcbd709372bce1060b87}"
 
 MAIN_VENV="$ROOT_DIR/.venv"
 BAYESDAG_VENV="$ROOT_DIR/.venv-bayesdag"
@@ -43,7 +44,8 @@ uv pip install --python "$MAIN_PYTHON" --no-deps --editable "$ROOT_DIR"
 
 if [[ "$JAX_EXTRAS" != "none" ]]; then
   info "Installing JAX backend in .venv: jax[${JAX_EXTRAS}]"
-  uv pip install --python "$MAIN_PYTHON" --upgrade "jax[${JAX_EXTRAS}]"
+  # No --upgrade: the jax/jaxlib versions stay pinned via pyproject + uv.lock.
+  uv pip install --python "$MAIN_PYTHON" "jax[${JAX_EXTRAS}]"
 
   INSTALLED_JAX_VERSION="$($MAIN_PYTHON - <<'PY'
 from importlib import metadata
@@ -134,9 +136,9 @@ uv pip install --python "$BAYESDAG_PYTHON" -r requirements-bayesdag.txt
 info "Installing Project-BayesDAG (causica) into .venv-bayesdag"
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
-git clone --depth 1 "$BAYESDAG_REPO_URL" "$tmp_dir/Project-BayesDAG"
+git clone "$BAYESDAG_REPO_URL" "$tmp_dir/Project-BayesDAG"
 if [[ -n "$BAYESDAG_REPO_REF" ]]; then
-  git -C "$tmp_dir/Project-BayesDAG" checkout "$BAYESDAG_REPO_REF"
+  git -C "$tmp_dir/Project-BayesDAG" checkout --detach "$BAYESDAG_REPO_REF"
 fi
 cp "$tmp_dir/Project-BayesDAG/README.md" "$tmp_dir/Project-BayesDAG/src/README.md"
 uv pip install --python "$BAYESDAG_PYTHON" --no-deps "$tmp_dir/Project-BayesDAG/src"

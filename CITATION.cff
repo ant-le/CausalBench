@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+type: software
+title: "Out-of-Distribution Generalization in Deep Learning-Based Bayesian Causal Discovery"
+authors:
+  - family-names: Lechuga
+    given-names: Anton
+    email: anton.luis.lechuga@proton.me
+version: 1.0.0
+date-released: "2026-08-28"
+license: MIT
+repository-code: https://github.com/ant-le/CausalBench

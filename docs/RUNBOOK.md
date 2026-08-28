@@ -67,20 +67,6 @@ scripts/submit_all_models.sh smoke
 `scripts/run_all_models.sh` remains available for sequential execution from an
 existing allocation (it does not submit via `sbatch`).
 
-Submit ablations (AviCi + BCNP across all ablation data configs):
-
-```bash
-scripts/submit_ablation_suite.sh
-```
-
-Customize ablation fanout with environment variables:
-
-```bash
-CAUSAL_META_ABLATION_MODELS=avici,bcnp \
-CAUSAL_META_ABLATION_DATA_CONFIGS=ablation_linear_only,ablation_linear_mlp \
-scripts/submit_ablation_suite.sh dg_2pretrain_multimodel my_ablation_prefix
-```
-
 Optional arguments for each script:
 
 ```bash
@@ -134,3 +120,30 @@ uv run python -m causal_meta.analysis.run_analysis experiments/runs \
 
 If no `--run-id`/`--run-dir` is provided, analysis discovers all `metrics.json`
 under the supplied runs root.
+
+## 9. Data Acquisition & Licensing (SynTReN)
+
+The `real_syntren` test family (d=20, following the BayesDAG benchmark setting)
+is not shipped with this repository. Its loader expects local files placed in
+`src/causal_meta/datasets/real_world/_cache/syntren/` (or a custom `data_dir`):
+
+- `data.csv` / `data.tsv` —  expression matrix (rows=samples, cols=genes)
+- `adjacency.csv` / `adjacency.tsv` —  ground-truth DAG (d × d)
+- or a single `data.npz` with `data` and `adjacency` arrays.
+
+**Acquisition.** SynTReN is a Java-based generator published as supplementary
+software for Van den Bulcke et al. (2006). Download `SynTReN.zip` (v1.2,
+2007-06-08) from the authors' page
+(<http://bioinformatics.intec.ugent.be/kmarchal/SynTReN/>) and run
+`java -jar SynTReN.jar`, then export/save the resulting network adjacency and
+expression matrix in the layout above. The BayesDAG/DiBS papers also used
+SynTReN datasets; this repository intentionally does not bundle them.
+
+**Licensing.** The SynTReN paper is open access (CC BY 2.0, BioMed Central);
+the tool is distributed freely by the authors (publicly listed as freeware).
+Cite the source article when using the data:
+
+- Van den Bulcke, T., Van Leemput, K., Naudts, B., van Remortel, P., Ma, H.,
+  Verschoren, A., De Moor, B., Marchal, K. (2006). "SynTReN: a generator of
+  synthetic gene expression data for design and analysis of structure learning
+  algorithms." *BMC Bioinformatics*, 7:43. doi:10.1186/1471-2105-7-43.

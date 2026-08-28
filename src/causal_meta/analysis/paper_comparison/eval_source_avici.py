@@ -36,10 +36,10 @@ Usage::
     PYTHONPATH=src uv run python -m causal_meta.analysis.paper_comparison.eval_source_avici \\
         run-all --checkpoints scm-v0
 
-Setup for avici venv::
+Setup for avici venv (pinned for reproducibility)::
 
     uv venv .venv-avici --python 3.11
-    uv pip install --python .venv-avici/bin/python avici numpy
+    uv pip install --python .venv-avici/bin/python "avici==1.0.7" numpy
 """
 
 from __future__ import annotations
@@ -583,7 +583,7 @@ def phase_compute_metrics(
         "batch_size_test_interventional": 1,
         "raw_granularity": "per_task",
         "source_checkpoint": checkpoint,
-        "source_package": "avici (pip install avici)",
+        "source_package": "avici==1.0.7",
         "note": (
             "Source AVICI pretrained model evaluated on thesis test data. "
             "Edge probabilities converted to binary samples via Bernoulli "

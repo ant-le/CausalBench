@@ -36,17 +36,18 @@ uv run causal-meta --config-name dg_2pretrain_smoke model=avici
 
 ### 3. Cluster Execution (Slurm)
 
-Full experiments and ablations are designed to run on a Slurm cluster. Submission scripts are provided in `scripts/`:
+Full experiments are designed to run on a Slurm cluster. Submission scripts are provided in `scripts/`:
 
 ```bash
 # Run the main benchmark sweep across all models
 scripts/submit_all_models.sh main
-
-# Run the ablation suite
-scripts/submit_ablation_suite.sh
 ```
 
 ## Documentation
 
 - [Runbook](docs/RUNBOOK.md): Detailed guide on environment setup, running experiments, sweeps, and reproducing analysis figures.
 - [Design](docs/DESIGN.md): Architectural overview of the datasets, models, and evaluation pipeline.
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
