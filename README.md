@@ -1,5 +1,7 @@
 # Out-of-Distribution Generalization in Deep Learning-Based Bayesian Causal Discovery
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22140926.svg)](https://doi.org/10.5281/zenodo.22140926)
+
 This repository contains the code and experiments for the Master's thesis **"Out-of-Distribution Generalization in Deep Learning-Based Bayesian Causal Discovery"**.
 
 The framework provides a scalable, Hydra-configured environment for benchmarking Bayesian Causal Discovery and Meta-Learning algorithms under distributional shift. It evaluates amortized inference methods (AviCi, BCNP) against explicit Bayesian methods (DiBS, BayesDAG) to test their robustness and the utility of posterior uncertainty.
